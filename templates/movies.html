@@ -1,0 +1,92 @@
+{% extends 'main.html' %}
+{% block title %}Movies{% endblock %}
+{% block header %}
+    <h1 class="intro-title">Redflix Movies Database</h1>
+{% endblock %}
+
+{% block content %}
+    <!-- Form for entering home purchase info -->
+    <div class="add-info">
+        <h2>Add a new movie to the database</h2>
+        <form id="moviesForm" action="/movies" method="POST">
+            <table class="form-table">            
+                <tr>
+                    <td><label class="form-label" for="movie_title">Movie title: </label></td>
+                    <td><input type="text" id="movie_title" name="movie_title" size="20" maxlength="30" required></td>
+                </tr>
+                <tr>
+                    <td><b>Note: Rental price must be an integer</b></td>
+                </tr>
+                <tr>
+                    <td><label class="form-label" for="rental_price">Rental price: </label></td>
+                    <td><input type="number" id="rental_price" name="rental_price" size="9" maxlength="2" required></td>
+                </tr>
+                <tr>
+                    <td><label class="form-label" for="studio_id">Studio: </label></td>
+                    <td><select id="studio_id" name="studio_id">
+                        {% for studio in studios %}
+                        <option value={{studio[0]}}>{{studio[1]}}</option>
+                        {% endfor %}
+                    </select></td>
+                </tr>
+                <tr>
+                  <td><label class="form-label" for="genre_id">Genre: </label></td>
+                    <td><select id="genre_id" name="genre_id">
+                        {% for genre in genres %}
+                        <option value={{genre[0]}}>{{genre[1]}}</option>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="line-height: 16px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" id="submit-movie" class="btn btn-primary" style="vertical-align: center;">Submit</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <br>
+    
+    <div class="movie-table-data-header">
+        <h2>Movies Database</h2>
+
+        <p><h3>Filter by Genre</h3>
+          <!-- Filter -->
+          <form id="search" action="/movies" method="GET">
+            <label for="searchBar">Filter Movies by Genre</label>
+            <p><input type="text" id="searchBar" name="searchBar" class="form-label" maxlength="30" placeholder="Comedy, Action, etc.">
+            <button type="submit" class="btn btn-primary" form="search">Filter</button>
+          </form>
+        </p>
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Movie ID</th>
+              <th scope="col">Movie Title</th>
+              <th scope="col">Rental Price ($)</th>
+              <th scope="col">Studio</th>
+              <th scope="col">Genre</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for movie in movies %}
+              <tr>
+                <th scope="row"> {{movie[0]}} </th>
+                <td> {{movie[1]}} </td>
+                <td> {{movie[2]}} </td>
+                <td> {{movie[3]}} </td>
+                <td> {{movie[4]}} </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    <div id="results-display"></div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+{% block title %}Studios{% endblock %}
+{% block header %}
+    <h1 class="intro-title">Redflix Studios Database</h1>
+{% endblock %}
+
+{% block content %}
+      <div class="add-info">
+        <h2>Add a new studio to the database</h2>
+        <form id="calc-form" class="calc-form" method="POST">
+            <table class="form-table">            
+                <tr>
+                    <td><label class="form-label">Studio name: </label></td>
+                    <td><input type="text" name="studio_name" size="30" maxlength="30" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="line-height: 16px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" id="submit-studio" class="btn btn-primary" style="vertical-align: center;">Submit</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+      </div>
+      <br>
+      <div class="genre-table-data-header">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Studio ID</th>
+                <th scope="col">Studio Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for r in rows %}
+                <tr>
+                  <th scope="row"> {{r[0]}} </th>
+                  <td> {{r[1]}} </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+    <div id="results-display"></div>
+{% endblock %}

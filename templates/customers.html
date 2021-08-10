@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+{% block title %}Redflix Customers{% endblock %}
+{% block header %}
+    <h1 class="intro-title">Redflix Customer Database</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="add-info">
+        <h2>Add a new customer to the database</h2>
+        <form id="add-cust" class="cust-form" method="POST">
+            <table class="form-table">
+                <!-- add new customer -->
+                <tr>
+                    <td><label class="form-label">First Name: </label></td>
+                    <td><input type="text" name="first_name" size="15" maxlength="15" placeholder="John" required></td>
+                </tr>
+                <tr>
+                    <td><label class="form-label">Last Name: </label></td>
+                    <td><input type="text" name="last_name" size="15" maxlength="15" placeholder="Doe" required></td>
+                </tr>
+                <tr>
+                    <td><label class="form-label">Email Address: </label></td>
+                    <td><input type="email" name="email" size="15" maxlength="25" placeholder="hello@example.com" required></td>
+                </tr>
+                <tr>
+                    <td><label class="form-label" for="genre_id">Favorite Genre: </label></td>
+                      <td><select id="genre_id" name="genre_id">
+                          {% for genre in genres %}
+                          <option value={{genre[0]}}>{{genre[1]}}</option>
+                          {% endfor %}
+                      </td>
+                </tr>
+                <!-- submit button -->
+                <tr>
+                    <td colspan="2" style="line-height: 16px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" id="submit-customer" class="btn btn-primary" style="vertical-align: center;">Add me to REDFLIX!</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br>
+    <h2>Customers Database</h2>
+    <div class="customer-table-data-header">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Customer ID</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Favorite Genre</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for person in customers %}
+              <tr>
+                <th scope="row"> {{person[0]}} </th>
+                <td> {{person[1]}} </td>
+                <td> {{person[2]}} </td>
+                <td> {{person[3]}} </td>
+                <td> {{person[4]}} </td>
+                <td> {{person[5]}} </td>
+                <td>
+                    <button type="submit" id="update-customer" class="btn btn-primary" onclick="window.location='/updateCustomer/{{person[0]}}'">Update</button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    <br>
+    <div id="results-display"></div>
+{% endblock %}

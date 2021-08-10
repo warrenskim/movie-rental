@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+{% block title %}Genres{% endblock %}
+{% block header %}
+    <h1 class="intro-title">Redflix Genres Database</h1>
+{% endblock %}
+
+{% block content %}
+    <!-- Form for entering home purchase info -->
+    <div class="add-info">
+        <h2>Add a new genre to the database</h2>
+        <form id="genresForm" action="/genres" method="POST">
+            <table class="form-table">            
+                <tr>
+                    <td><label class="form-label" for="genre_name">Genre name: </label></td>
+                    <td><input type="text" id="genre_name" name="genre_name" size="20" maxlength="255" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="line-height: 16px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="btn btn-primary" style="vertical-align: center;" form="genresForm">Submit</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <br>
+
+    <div class="genre-table-data-header">
+        <h2>Genres Database</h2>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Genre ID</th>
+              <th scope="col">Genre Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for genre in genres %}
+              <tr>
+                <th scope="row"> {{genre[0]}} </th>
+                <td> {{genre[1]}} </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      
+
+    <div id="results-display"></div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'main.html' %}
+{% block title %}Redflix: Rent movies anytime!{% endblock %}
+{% block header %}
+    <h1 class="intro-title">REDFLIX</h1>
+{% endblock %}
+
+{% block content %}
+    <h2 class="home-text">The movie rental site you've never heard of</h2>
+    <p class="home-text">Redflix Customer & Movie Admin page</p>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="../static/images/starwars.jpg" alt="Star Wars">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="../static/images/ironman.jpg" alt="Iron Mane">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="../static/images/ww.jpg" alt="Third slide">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <ul class="ref-list"> 
+      <li class="nav-item active">
+          <a class="nav-link" href="/">Home</a>
+          <ul>
+              <li>Has a horizontal navbar with links to the other pages</li>
+              <li>Picture carousel that cycles through posters of movies in our database</li>
+          </ul>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/customers">Customers</a>
+          <ul>
+              <li>Displays the customers table</li>
+              <li>Contains a form to add new customers, as well as a button to update customer info</li>
+          </ul>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/movies">Movies</a>
+          <ul>
+              <li>Displays the movies table</li>
+              <li>Contains a form to add a new movie, as well as a button to delete movies</li>
+          </ul>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/orders">Orders</a>
+          <ul>
+              <li>Displays the orders and movies (many-to-many relationship) table</li>
+              <li>Contains a form to create a new order</li>
+              <li>Contains a form to add movies to an existing order</li>
+          </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/genres">Genres</a>
+        <ul>
+            <li>Displays the genres table</li>
+            <li>Contains a form to add a new genre</li>
+        </ul>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/studios">Studios</a>
+          <ul>
+              <li>Displays the studios</li>
+              <li>Contains a form to add a new studio</li>
+          </ul>
+      </li>
+    </ul>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+{% endblock %}

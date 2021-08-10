@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% block title %}Update Redflix Customer{% endblock %}
+{% block header %}
+    <h1 class="intro-title">Update Redflix Customer {{id}}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="update-info">
+        <form id="add-cust" class="update-form" method="POST">
+            <table class="form-table">
+                <!-- update customer -->
+                <tr>
+                    <td><label class="form-label">First Name: </label></td>
+                    <td><input type="text" id="first_name" name="first_name" size="15" maxlength="15" placeholder="John" required></td>
+                </tr>
+                <tr>
+                    <td><label class="form-label">Last Name: </label></td>
+                    <td><input type="text" id="last_name" name="last_name" size="15" maxlength="15" placeholder="Doe" required></td>
+                </tr>
+                <tr>
+                    <td><label class="form-label">Email Address: </label></td>
+                    <td><input type="email" id="email" name="email" size="15" maxlength="25" placeholder="hello@example.com" required></td>
+                </tr>
+                <tr>
+                    <td><label class="form-label" for="genre_id">Favorite Genre: </label></td>
+                      <td><select id="genre_id" id="genre_id" name="genre_id">
+                          {% for genre in genres %}
+                          <option value={{genre[0]}}>{{genre[1]}}</option>
+                          {% endfor %}
+                      </td>
+                </tr>
+                <!-- submit button -->
+                <tr>
+                    <td colspan="2" style="line-height: 16px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" id="update-customer" class="btn btn-primary">Update Customer</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+{% endblock %}
