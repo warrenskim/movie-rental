@@ -62,11 +62,16 @@ FOREIGN KEY(movie_id) REFERENCES movies (movie_id),
 PRIMARY KEY (order_id, movie_id)
 ) ENGINE=InnoDB;
 
+
+-- setting auto_increment values and start point
 ALTER TABLE genres AUTO_INCREMENT = 1;
 ALTER TABLE customers AUTO_INCREMENT = 1;
 ALTER TABLE orders AUTO_INCREMENT = 1;
 ALTER TABLE movies AUTO_INCREMENT = 1;
 ALTER TABLE studios AUTO_INCREMENT = 1;
+
+SET @@auto_increment_increment=1;
+
 
 -- insert data into studios table
 INSERT INTO studios (studio_name)
@@ -92,17 +97,25 @@ VALUES
 -- insert data into customers table
 INSERT INTO customers (first_name, last_name, email, genre_id)
 VALUES
-    ('Eric', 'Chiu', 'eric21@gmail.com', 2),
-    ('Warren', 'Kim', 'warren@hello.com', 3),
-    ('Pamela', 'Beasley', 'pam@dundermifflin.com', 3),
-    ('Michael', 'Scott', 'mike@dundermifflin.com', 2),
-    ('Louise', 'Belcher', 'louise@wagstaff.com', 4),
-    ('Tina', 'Belcher', 'tina@wagstaff.com', 2);
+    ('Eric', 'Chiu', 'eric21@gmail.com', 
+		(SELECT genre_id FROM genres WHERE genre_name="Action")),
+    ('Warren', 'Kim', 'warren@hello.com', 
+		(SELECT genre_id FROM genres WHERE genre_name="Comedy")),
+    ('Pamela', 'Beasley', 'pam@dundermifflin.com', 
+		(SELECT genre_id FROM genres WHERE genre_name="Romance")),
+    ('Michael', 'Scott', 'mike@dundermifflin.com', 
+		(SELECT genre_id FROM genres WHERE genre_name="Comedy")),
+    ('Louise', 'Belcher', 'louise@wagstaff.com', 
+		(SELECT genre_id FROM genres WHERE genre_name="Action")),
+    ('Tina', 'Belcher', 'tina@wagstaff.com', 
+		(SELECT genre_id FROM genres WHERE genre_name="Romance")),
+    ('Piper', 'Chapman', 'piper@litchfield.com', 
+		(SELECT genre_id FROM genres WHERE genre_name="Action"));
 
 -- insert data into orders table
 INSERT INTO orders (customer_id)
 VALUES
-    (1),
+    (7),
     (5),
     (4),
     (1),

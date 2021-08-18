@@ -1,8 +1,8 @@
 import MySQLdb as mariadb
-from db_info import host, user, password, db
+from db_info import movie_host, movie_user, movie_password, movie_db
 
 
-def connect_to_database(host=host, user=user, password=password, db=db):
+def connect_to_database(host=movie_host, user=movie_user, password=movie_password, db=movie_db):
     """Connects to a database using the provided credentials"""
 
     db_connection = mariadb.connect(host, user, password, db)
