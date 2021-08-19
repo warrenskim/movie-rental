@@ -4,7 +4,6 @@ import os
 
 app = Flask(__name__)
 
-# TAKE THIS OUT WHEN DEPLOYING
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
 app.config['TESTING'] = True
@@ -16,7 +15,6 @@ def get_home():
 
 
 ## Display / Add / Update Customers
-
 @app.route("/customers", methods=['GET', 'POST'])
 def get_customers():
 
@@ -35,10 +33,12 @@ def get_customers():
         # Create query string and execute command
         # If customer selects "none" as their genre
         if cust_genre == 1:
-            query = 'INSERT INTO customers (first_name, last_name, email, genre_id) VALUES (%s, %s, %s, NULL)'
+            query = 'INSERT INTO customers (first_name, last_name, email, genre_id) \
+                    VALUES (%s, %s, %s, NULL)'
             data = (cust_fname, cust_lname, cust_email)
         else:
-            query = 'INSERT INTO customers (first_name, last_name, email, genre_id) VALUES (%s, %s, %s, %s)'
+            query = 'INSERT INTO customers (first_name, last_name, email, genre_id) \
+                    VALUES (%s, %s, %s, %s)'
             data = (cust_fname, cust_lname, cust_email, cust_genre)
 
         execute_query(db_connection, query, data)
@@ -48,7 +48,8 @@ def get_customers():
 
     # Create query strings and execute to retrieve required data from database
     query1 = 'SELECT customers.customer_id, customers.first_name, customers.last_name, customers.email, genres.genre_name \
-            FROM customers JOIN genres ON customers.genre_id = genres.genre_id'
+            FROM customers \
+            JOIN genres ON customers.genre_id = genres.genre_id'
     result1 = execute_query(db_connection, query1).fetchall()
 
     query2 = 'SELECT * FROM genres'
@@ -58,7 +59,6 @@ def get_customers():
 
 
 ## Display / Add Genres
-
 @app.route("/genres", methods=['GET', 'POST'])
 def genres():
 
@@ -88,7 +88,6 @@ def genres():
 
 
 ## Display / Add / Filter Movies
-
 @app.route("/movies", methods=['GET', 'POST'])
 def movies():
 
@@ -105,7 +104,8 @@ def movies():
         genre_id = request.form['genre_id']
 
         # Create query string and execute command
-        query = 'INSERT INTO movies (movie_title, rental_price, studio_id, genre_id) VALUES (%s, %s, %s, %s)'
+        query = 'INSERT INTO movies (movie_title, rental_price, studio_id, genre_id) \
+                VALUES (%s, %s, %s, %s)'
         data = (movie_title, rental_price, studio_id, genre_id)
         execute_query(db_connection, query, data)
         alerts = ("Movies have been updated!", False)
@@ -120,12 +120,15 @@ def movies():
 	# Check if user uses the search bar
     if search_request is not None:
         query = f"SELECT movies.movie_id, movies.movie_title, movies.rental_price, studios.studio_name, genres.genre_name \
-                FROM movies JOIN studios ON movies.studio_id = studios.studio_ID JOIN genres ON movies.genre_id = genres.genre_id \
+                FROM movies \
+                JOIN studios ON movies.studio_id = studios.studio_ID JOIN genres ON movies.genre_id = genres.genre_id \
                 WHERE movies.genre_id LIKE (SELECT genre_id FROM genres where genre_name LIKE '%{search_request}%')"
         result = execute_query(db_connection, query).fetchall()
     else:
         query = f'SELECT movies.movie_id, movies.movie_title, movies.rental_price, studios.studio_name, genres.genre_name \
-                FROM movies JOIN studios ON movies.studio_id = studios.studio_ID JOIN genres ON movies.genre_id = genres.genre_id'
+                FROM movies \
+                JOIN studios ON movies.studio_id = studios.studio_ID \
+                JOIN genres ON movies.genre_id = genres.genre_id'
         result = execute_query(db_connection, query).fetchall()
 
     query1 = f'SELECT * FROM studios'
@@ -168,7 +171,6 @@ def studios():
 
 
 # Display / Add Orders and Movies_Orders 
-
 @app.route("/orders", methods=['GET', 'POST'])
 def get_orders():
 
@@ -200,12 +202,14 @@ def get_orders():
 
     # Create query strings and execute to retrieve required data from database
     query = 'SELECT orders.order_id, customers.first_name, customers.last_name \
-            FROM orders JOIN customers ON orders.customer_id = customers.customer_id \
+            FROM orders \
+            JOIN customers ON orders.customer_id = customers.customer_id \
             ORDER BY orders.order_id ASC'
     result = execute_query(db_connection, query).fetchall()
 
     query1 = 'SELECT movies_orders.order_id, movies_orders.movie_id, movies.movie_title \
-            FROM movies_orders JOIN movies ON movies_orders.movie_id = movies.movie_id \
+            FROM movies_orders \
+            JOIN movies ON movies_orders.movie_id = movies.movie_id \
             ORDER BY movies_orders.order_id ASC, movies_orders.movie_id'
     result1 = execute_query(db_connection, query1).fetchall()
 
@@ -218,7 +222,7 @@ def get_orders():
     return render_template('orders.html', orders=result, movies_orders=result1, customers=result2, movies=result3, alerts=alerts)
 
 
-## Delete Orders (and subsequently, Movies_Orders)
+# Delete Orders (and subsequently, Movies_Orders)
 @app.route("/deleteOrder/<int:id>", methods=['GET', 'POST'])
 def delete_order(id):
     db_connection = connect_to_database()
@@ -260,9 +264,10 @@ def update_cust(id):
         cust_email = request.form['email']
         cust_genre = request.form['genre_id']
 
-        update_query = 'UPDATE customers SET first_name=%s, last_name=%s, email=%s, genre_id=%s WHERE customer_id=%s;'
+        update_query = 'UPDATE customers SET first_name=%s, last_name=%s, email=%s, genre_id=%s \
+                        WHERE customer_id=%s;'
         data = (cust_fname, cust_lname, cust_email, cust_genre, id)
-        result = execute_query(db_connection, update_query, data)
+        execute_query(db_connection, update_query, data)
         alerts = (f"Customer {id} has been updated!", True)
 
         print('Update went through!')
@@ -276,8 +281,8 @@ def update_cust(id):
 
     return render_template('customers.html', customers=result1, genres=result2, alerts=alerts)
 
-# Listener
 
+# Listener
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 3157)) 
     app.run(port=port, debug=True) 
