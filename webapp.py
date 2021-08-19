@@ -273,7 +273,9 @@ def update_cust(id):
         print('Update went through!')
 
     # Create query strings and execute to retrieve required data from database
-    query1 = 'SELECT * FROM customers'
+    query1 = 'SELECT customers.customer_id, customers.first_name, customers.last_name, customers.email, genres.genre_name \
+            FROM customers \
+            JOIN genres ON customers.genre_id = genres.genre_id'
     result1 = execute_query(db_connection, query1).fetchall()
 
     query2 = 'SELECT * FROM genres'
